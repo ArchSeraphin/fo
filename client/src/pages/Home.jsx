@@ -45,13 +45,6 @@ export default function Home() {
         <div className="hero-bg" />
         <div className="container">
           <div className="hero-grid">
-            <div className="hero-image-wrap">
-              <img
-                src="/img/france-organe-enfant-home-2.png"
-                alt="Enfant portant un cœur — France Organes"
-                className="hero-image"
-              />
-            </div>
             <div className="hero-content">
               <div className="hero-tag">🎗️ Association nationale de santé</div>
               <h1>Pour que la <em>vie</em> continue</h1>
@@ -62,6 +55,13 @@ export default function Home() {
                 <Link to="/a-propos" className="btn btn-primary btn-lg">Découvrir notre mission</Link>
                 <Link to="/contact" className="btn btn-ghost btn-lg">Nous contacter</Link>
               </div>
+            </div>
+            <div className="hero-image-wrap">
+              <img
+                src="/img/france-organe-enfant-home-2.png"
+                alt="Enfant portant un cœur — France Organes"
+                className="hero-image"
+              />
             </div>
           </div>
         </div>
