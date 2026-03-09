@@ -45,6 +45,21 @@ async function main() {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
   `);
 
+  await conn.execute(`
+    CREATE TABLE IF NOT EXISTS partners (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      type VARCHAR(100) NOT NULL DEFAULT 'Partenaire',
+      website VARCHAR(500),
+      logo_url VARCHAR(500),
+      display_order INT NOT NULL DEFAULT 0,
+      active TINYINT(1) NOT NULL DEFAULT 1,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      INDEX idx_active (active),
+      INDEX idx_order (display_order)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+  `);
+
   const email = process.argv[2] || await prompt('Email admin: ');
   const password = process.argv[3] || await prompt('Mot de passe admin: ');
 

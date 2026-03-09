@@ -7,12 +7,16 @@ const { requireAuth } = require('../middleware/auth');
 const articleController = require('../controllers/articleController');
 const authController = require('../controllers/authController');
 const contactController = require('../controllers/contactController');
+const partnerController = require('../controllers/partnerController');
 
 router.use(apiLimiter);
 
 // Articles publics
 router.get('/articles', articleController.getAll);
 router.get('/articles/:slug', articleController.getOne);
+
+// Partenaires publics
+router.get('/partners', partnerController.getAll);
 
 // Contact
 router.post('/contact',

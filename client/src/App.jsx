@@ -10,6 +10,8 @@ import Legal from './pages/Legal';
 import AdminLogin from './pages/admin/Login';
 import AdminDashboard from './pages/admin/Dashboard';
 import ArticleEditor from './pages/admin/ArticleEditor';
+import PartnersDashboard from './pages/admin/PartnersDashboard';
+import PartnerEditor from './pages/admin/PartnerEditor';
 
 export const AuthContext = createContext(null);
 
@@ -60,6 +62,9 @@ export default function App() {
           <Route path="/admin/tableau-de-bord" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
           <Route path="/admin/articles/nouveau" element={<ProtectedRoute><ArticleEditor /></ProtectedRoute>} />
           <Route path="/admin/articles/:id/modifier" element={<ProtectedRoute><ArticleEditor /></ProtectedRoute>} />
+          <Route path="/admin/partenaires" element={<ProtectedRoute><PartnersDashboard /></ProtectedRoute>} />
+          <Route path="/admin/partenaires/nouveau" element={<ProtectedRoute><PartnerEditor /></ProtectedRoute>} />
+          <Route path="/admin/partenaires/:id/modifier" element={<ProtectedRoute><PartnerEditor /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
