@@ -27,7 +27,7 @@ export default function Navbar() {
   const showTransparent = isHome && !scrolled;
 
   return (
-    <nav className={`navbar${scrolled ? ' scrolled' : ''}`} style={!showTransparent ? { background: 'white', boxShadow: '0 4px 16px rgba(38,54,90,0.12)' } : {}}>
+    <nav className={`navbar${scrolled ? ' scrolled' : ''}${showTransparent ? ' transparent' : ''}`} style={!showTransparent ? { background: 'white', boxShadow: '0 4px 16px rgba(38,54,90,0.12)' } : {}}>
       <div className="container">
         <div className="navbar-inner">
           <Link to="/" className="navbar-logo">
