@@ -44,15 +44,24 @@ export default function Home() {
       <section className="hero">
         <div className="hero-bg" />
         <div className="container">
-          <div className="hero-content">
-            <div className="hero-tag">🎗️ Association nationale de santé</div>
-            <h1>Pour que la <em>vie</em> continue</h1>
-            <p className="hero-subtitle">
-              France Organes accompagne les patients en attente de greffe, soutient les familles de donneurs et sensibilise le grand public à l'importance du don d'organes.
-            </p>
-            <div className="hero-actions">
-              <Link to="/a-propos" className="btn btn-primary btn-lg">Découvrir notre mission</Link>
-              <Link to="/contact" className="btn btn-ghost btn-lg">Nous contacter</Link>
+          <div className="hero-grid">
+            <div className="hero-image-wrap">
+              <img
+                src="/img/france-organe-enfant-home-2.png"
+                alt="Enfant portant un cœur — France Organes"
+                className="hero-image"
+              />
+            </div>
+            <div className="hero-content">
+              <div className="hero-tag">🎗️ Association nationale de santé</div>
+              <h1>Pour que la <em>vie</em> continue</h1>
+              <p className="hero-subtitle">
+                France Organes accompagne les patients en attente de greffe, soutient les familles de donneurs et sensibilise le grand public à l'importance du don d'organes.
+              </p>
+              <div className="hero-actions">
+                <Link to="/a-propos" className="btn btn-primary btn-lg">Découvrir notre mission</Link>
+                <Link to="/contact" className="btn btn-ghost btn-lg">Nous contacter</Link>
+              </div>
             </div>
           </div>
         </div>

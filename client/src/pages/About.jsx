@@ -27,7 +27,7 @@ export default function About() {
       {/* HISTOIRE */}
       <section className="section" style={{ background: 'white' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+          <div className="about-story-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
             <div className="reveal-left">
               <span className="section-label">Notre histoire</span>
               <h2>Une association née de la nécessité</h2>

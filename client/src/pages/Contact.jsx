@@ -47,7 +47,7 @@ export default function Contact() {
 
       <section className="section" style={{ background: 'var(--color-bg)' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '4rem', alignItems: 'start' }}>
+          <div className="contact-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '4rem', alignItems: 'start' }}>
 
             <div className="reveal-left">
               <h3 style={{ marginBottom: '1.5rem' }}>Nos coordonnées</h3>
@@ -72,7 +72,7 @@ export default function Contact() {
                 </div>
               )}
               <form onSubmit={handleSubmit}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div className="contact-form-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                   <div className="form-group">
                     <label className="form-label">Nom complet *</label>
                     <input className="form-input" name="name" value={form.name} onChange={handleChange} required maxLength={100} />
@@ -82,7 +82,7 @@ export default function Contact() {
                     <input className="form-input" type="email" name="email" value={form.email} onChange={handleChange} required />
                   </div>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div className="contact-form-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                   <div className="form-group">
                     <label className="form-label">Téléphone</label>
                     <input className="form-input" name="phone" value={form.phone} onChange={handleChange} maxLength={20} />
