@@ -58,7 +58,7 @@ export default function Home() {
             </div>
             <div className="hero-image-wrap">
               <img
-                src="/img/france-organe-enfant-home-2.png"
+                src="/img/france-organe-enfant-home-3.png"
                 alt="Enfant portant un cœur — France Organes"
                 className="hero-image"
               />
