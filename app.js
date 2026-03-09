@@ -51,6 +51,9 @@ app.use(express.static(path.join(__dirname, 'client/dist'), {
 // Images served from img/
 app.use('/img', express.static(path.join(__dirname, 'img'), { maxAge: '7d' }));
 
+// Uploaded images (randomly named WebP, served via Express only)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'), { maxAge: '7d' }));
+
 // API routes
 app.use('/api', require('./src/routes/api'));
 app.use('/api/admin', require('./src/routes/admin'));

@@ -22,8 +22,8 @@ RewriteRule ^(.*)/$ /$1 [R=301,L]
   Deny from all
 </FilesMatch>
 
-# Block sensitive directories
-RewriteRule ^(node_modules|\.git|src|scripts|seed|uploads)(/|$) - [F,L]
+# Block sensitive directories (uploads exclu : servi par Express)
+RewriteRule ^(node_modules|\.git|src|scripts|seed)(/|$) - [F,L]
 
 # Security headers
 Header always set X-Content-Type-Options nosniff
