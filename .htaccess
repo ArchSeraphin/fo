@@ -1,0 +1,32 @@
+# Force HTTPS
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# Force non-www
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
+# Remove trailing slash (except root)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [R=301,L]
+
+# Block sensitive files
+<FilesMatch "\.(env|env\..+|log|sql|sqlite|db|md|gitignore|gitattributes)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+<FilesMatch "^(package\.json|package-lock\.json|Makefile|Dockerfile|config\.json)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# Block sensitive directories
+RewriteRule ^(node_modules|\.git|src|scripts|seed|uploads)(/|$) - [F,L]
+
+# Security headers
+Header always set X-Content-Type-Options nosniff
+Header always set X-Frame-Options DENY
+Header always set Referrer-Policy strict-origin-when-cross-origin
+Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
