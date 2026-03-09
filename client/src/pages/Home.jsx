@@ -49,7 +49,7 @@ export default function Home() {
               <div className="hero-tag">🎗️ Association nationale de santé</div>
               <h1>Pour que la <em>vie</em> continue</h1>
               <p className="hero-subtitle">
-                France Organes accompagne les patients en attente de greffe, soutient les familles de donneurs et sensibilise le grand public à l'importance du don d'organes.
+                  FranceOrganes soutient les enfants hospitalisés en attente de greffe d'organes et sensibilise le grand public au don d'organes. Fondée en 2009 en Isère, notre équipe de bénévoles se bat chaque jour pour que la vie continue.
               </p>
               <div className="hero-actions">
                 <Link to="/a-propos" className="btn btn-primary btn-lg">Découvrir notre mission</Link>
@@ -76,10 +76,10 @@ export default function Home() {
         <div className="container">
           <div className="stats-grid">
             {[
-              { number: '25 000+', label: 'personnes en attente de greffe' },
-              { number: '6 000', label: 'greffes réalisées par an' },
-              { number: '1 donneur', label: 'peut sauver jusqu\'à 8 vies' },
-              { number: 'Depuis 2010', label: 'au service des patients' },
+              { number: '~40 enfants', label: 'gâtés individuellement chaque année' },
+              { number: '16 ans', label: 'd\'engagement associatif' },
+              { number: '10+', label: 'hôpitaux partenaires' },
+              { number: 'Depuis 2009', label: 'pour que la vie continue' },
             ].map((s, i) => (
               <div key={i} className="stat-item reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
                 <div className="stat-number">{s.number}</div>
@@ -100,9 +100,9 @@ export default function Home() {
           </div>
           <div className="features-grid">
             {[
-              { icon: '🫀', title: 'Accompagnement', desc: 'Nous soutenons les patients en attente de greffe et leurs proches tout au long de leur parcours médical et personnel.' },
-              { icon: '🤝', title: 'Sensibilisation', desc: 'Nous animons des campagnes de sensibilisation pour encourager l\'inscription sur la liste de donneurs d\'organes.' },
-              { icon: '📢', title: 'Plaidoyer', desc: 'Nous défendons les droits des patients et portons leur voix auprès des institutions sanitaires et gouvernementales.' },
+              { icon: '🎁', title: 'Gâter les enfants', desc: 'Chaque année, nous offrons individuellement des cadeaux choisis avec soin à chaque enfant hospitalisé en attente de greffe — environ une quarantaine d\'enfants gâtés.' },
+              { icon: '🏥', title: 'Équiper les services', desc: 'Nous finançons du matériel pour améliorer le quotidien des enfants : casque de réalité virtuelle, console de jeux, salle de repos pour les parents...' },
+              { icon: '🤝', title: 'Sensibiliser', desc: 'Grâce à nos stands, galas, lotos et événements, nous récoltons des fonds et sensibilisons le grand public à l\'importance du don d\'organes.' },
             ].map((f, i) => (
               <div key={i} className={`feature-card reveal reveal-delay-${i + 1}`}>
                 <div className="feature-icon">{f.icon}</div>
@@ -139,7 +139,7 @@ export default function Home() {
           <div className="reveal">
             <span className="section-label" style={{ color: 'rgba(255,255,255,0.6)' }}>Agir maintenant</span>
             <h2 style={{ color: 'white', marginBottom: '1rem' }}>Ensemble, sauvons des vies</h2>
-            <p>Votre soutien permet à France Organes de poursuivre sa mission d'accompagnement et de sensibilisation au don d'organes.</p>
+            <p>Grâce à vos dons et à l'achat de nos objets sur nos stands, nos bénévoles financent des projets concrets pour les enfants hospitalisés. Rejoignez l'aventure.</p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="https://www.helloasso.com" target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg">Faire un don</a>
               <Link to="/contact" className="btn btn-ghost btn-lg">Nous rejoindre</Link>

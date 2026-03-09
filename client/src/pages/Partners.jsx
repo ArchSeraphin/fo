@@ -5,12 +5,12 @@ import ScrollReveal from '../components/ScrollReveal';
 
 export default function Partners() {
   const partners = [
-    { name: 'Agence de la Biomédecine', type: 'Institutionnel', color: '#26365a' },
-    { name: 'Ministère de la Santé', type: 'Institutionnel', color: '#ce232b' },
-    { name: 'CHU de Paris', type: 'Hospitalier', color: '#26365a' },
-    { name: 'Fondation pour la Recherche', type: 'Académique', color: '#f0a500' },
-    { name: 'Croix-Rouge française', type: 'Associatif', color: '#ce232b' },
-    { name: 'France Assos Santé', type: 'Associatif', color: '#26365a' },
+    { name: 'Lyon1950', type: 'Partenaire', color: '#26365a' },
+    { name: 'ABD Basket', type: 'Partenaire', color: '#ce232b' },
+    { name: "L'Animal Rit", type: 'Partenaire', color: '#26365a' },
+    { name: "Association Poussière d'étoile", type: 'Partenaire', color: '#ce232b' },
+    { name: 'Hôpital Femme Mère Enfant', type: 'Institutionnel', color: '#26365a' },
+    { name: 'Hôpital Cardio de Lyon', type: 'Institutionnel', color: '#ce232b' },
   ];
 
   return (
@@ -28,8 +28,8 @@ export default function Partners() {
       <section className="section" style={{ background: 'white' }}>
         <div className="container">
           <div className="section-header reveal">
-            <span className="section-label">Un réseau solide</span>
-            <h2>Ils nous font confiance</h2>
+            <span className="section-label">Ils nous soutiennent</span>
+            <h2>Nos partenaires</h2>
             <div className="section-divider" />
           </div>
           <div className="partners-grid reveal">
@@ -54,7 +54,7 @@ export default function Partners() {
           <div style={{ marginTop: '4rem', background: 'var(--color-bg)', borderRadius: 'var(--radius-xl)', padding: '3rem', textAlign: 'center' }} className="reveal">
             <h3 style={{ marginBottom: '1rem' }}>Vous souhaitez devenir partenaire ?</h3>
             <p style={{ color: 'var(--color-text-muted)', maxWidth: '500px', margin: '0 auto 1.5rem' }}>
-              France Organes est ouverte à de nouveaux partenariats avec des organisations partageant nos valeurs.
+              FranceOrganes est ouverte à de nouveaux partenariats avec des structures partageant notre engagement pour les enfants hospitalisés.
             </p>
             <a href="/contact" className="btn btn-primary">Prendre contact</a>
           </div>

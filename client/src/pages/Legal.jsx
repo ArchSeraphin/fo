@@ -18,8 +18,12 @@ export default function Legal() {
           <div style={{ maxWidth: '760px', margin: '0 auto', lineHeight: 1.8, color: 'var(--color-text)' }}>
 
             <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>1. Identification de l'éditeur</h2>
-            <p><strong>Nom :</strong> France Organes</p>
+            <p><strong>Nom :</strong> FranceOrganes</p>
             <p><strong>Forme juridique :</strong> Association loi 1901</p>
+            <p><strong>Date de création :</strong> 4 mai 2009</p>
+            <p><strong>Siège social :</strong> Isère (38)</p>
+            <p><strong>SIRET :</strong> (à compléter)</p>
+            <p><strong>Présidente :</strong> Audrey SUAIRE</p>
             <p><strong>Email :</strong> contact@franceorganes.fr</p>
             <p><strong>Site web :</strong> https://franceorganes.fr</p>
 
