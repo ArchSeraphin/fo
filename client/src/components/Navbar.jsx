@@ -56,7 +56,7 @@ export default function Navbar() {
               </Link>
             ))}
             <div className="navbar-cta">
-              <a href="https://www.helloasso.com" target="_blank" rel="noopener noreferrer" className={`btn btn-sm ${showTransparent ? 'btn-ghost' : 'btn-primary'}`}>
+              <a href="https://www.helloasso.com/associations/association-france-organes/formulaires/1" target="_blank" rel="noopener noreferrer" className={`btn btn-sm ${showTransparent ? 'btn-ghost' : 'btn-primary'}`}>
                 Faire un don
               </a>
             </div>
