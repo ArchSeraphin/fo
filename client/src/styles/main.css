@@ -1074,7 +1074,7 @@ p:last-child { margin-bottom: 0; }
   padding: 1.5rem;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   height: 100%;
   box-sizing: border-box;
   box-shadow: var(--shadow-sm);
