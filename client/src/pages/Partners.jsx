@@ -48,7 +48,7 @@ export default function Partners() {
                   ? { href: p.website, target: '_blank', rel: 'noopener noreferrer', title: `Visiter le site de ${p.name}` }
                   : {};
                 return (
-                  <Tag key={p.id} className="partner-item" {...linkProps} style={{ flexDirection: 'column', gap: '0.5rem', minHeight: '110px' }}>
+                  <Tag key={p.id} className="partner-item" {...linkProps} style={{ flexDirection: 'column', gap: '0.5rem' }}>
                     {p.logo_url ? (
                       <img src={p.logo_url} alt={p.name} style={{ height: '52px', maxWidth: '120px', objectFit: 'contain' }} />
                     ) : (
