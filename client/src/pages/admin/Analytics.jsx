@@ -51,9 +51,9 @@ export default function Analytics() {
           <span>Administration</span>
         </div>
         <nav className="admin-nav">
-          <Link to="/gestion/tableau-de-bord" className="admin-nav-link">📰 Actualités</Link>
-          <Link to="/gestion/partenaires" className="admin-nav-link">🤝 Partenaires</Link>
-          <Link to="/gestion/analytics" className="admin-nav-link active">📊 Analytics</Link>
+          <Link to="/admin/tableau-de-bord" className="admin-nav-link">📰 Actualités</Link>
+          <Link to="/admin/partenaires" className="admin-nav-link">🤝 Partenaires</Link>
+          <Link to="/admin/analytics" className="admin-nav-link active">📊 Analytics</Link>
         </nav>
         <div style={{ padding: '1.5rem' }}>
           <Link to="/" style={{ display: 'block', fontSize: '0.8125rem', color: 'rgba(255,255,255,0.5)' }}>← Voir le site</Link>
