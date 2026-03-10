@@ -2,12 +2,6 @@
 require('dotenv').config();
 const mysql = require('mysql2/promise');
 const bcrypt = require('bcrypt');
-const readline = require('readline');
-
-async function prompt(question) {
-  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-  return new Promise(resolve => rl.question(question, ans => { rl.close(); resolve(ans); }));
-}
 
 async function main() {
   const conn = await mysql.createConnection({
@@ -73,27 +67,49 @@ async function main() {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
   `);
 
-  const email = process.argv[2] || await prompt('Email admin: ');
-  const password = process.argv[3] || await prompt('Mot de passe admin: ');
-
-  if (!email || !password || password.length < 8) {
-    console.error('Email et mot de passe requis (min 8 caractères)');
-    process.exit(1);
-  }
-
-  const hash = await bcrypt.hash(password, 12);
-
-  const [existing] = await conn.execute('SELECT id FROM admins WHERE email = ?', [email]);
-  if (existing.length > 0) {
-    await conn.execute('UPDATE admins SET password_hash = ? WHERE email = ?', [hash, email]);
-    console.log(`✓ Mot de passe mis à jour pour ${email}`);
-  } else {
-    await conn.execute('INSERT INTO admins (email, password_hash) VALUES (?, ?)', [email, hash]);
-    console.log(`✓ Compte admin créé : ${email}`);
-  }
+  await conn.execute(`
+    CREATE TABLE IF NOT EXISTS settings (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      \`key\` VARCHAR(100) NOT NULL UNIQUE,
+      value TEXT,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+  `);
 
   await conn.end();
   console.log('✓ Tables créées/vérifiées');
+
+  const email = process.argv[2];
+  const password = process.argv[3];
+
+  if (!email || !password) {
+    console.log('ℹ️  Aucun compte admin créé (passez email et mot de passe en arguments pour en créer un).');
+    console.log('   Exemple : node seed/seed.js admin@example.com MonMotDePasse!');
+    process.exit(0);
+  }
+
+  if (password.length < 8) {
+    console.error('✗ Le mot de passe doit faire au moins 8 caractères');
+    process.exit(1);
+  }
+
+  const conn2 = await mysql.createConnection({
+    host: process.env.DB_HOST || 'localhost',
+    port: parseInt(process.env.DB_PORT || '3306'),
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+  });
+  const hash = await bcrypt.hash(password, 12);
+  const [existing] = await conn2.execute('SELECT id FROM admins WHERE email = ?', [email]);
+  if (existing.length > 0) {
+    await conn2.execute('UPDATE admins SET password_hash = ? WHERE email = ?', [hash, email]);
+    console.log(`✓ Mot de passe mis à jour pour ${email}`);
+  } else {
+    await conn2.execute('INSERT INTO admins (email, password_hash) VALUES (?, ?)', [email, hash]);
+    console.log(`✓ Compte admin créé : ${email}`);
+  }
+  await conn2.end();
   process.exit(0);
 }
 

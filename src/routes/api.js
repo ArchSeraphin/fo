@@ -8,6 +8,7 @@ const articleController = require('../controllers/articleController');
 const authController = require('../controllers/authController');
 const contactController = require('../controllers/contactController');
 const partnerController = require('../controllers/partnerController');
+const settingsController = require('../controllers/settingsController');
 
 router.use(apiLimiter);
 
@@ -41,5 +42,8 @@ router.post('/contact',
 router.post('/auth/login', loginLimiter, authController.login);
 router.post('/auth/refresh', authController.refresh);
 router.post('/auth/logout', authController.logout);
+
+// Paramètres publics (GA measurement ID)
+router.get('/settings', settingsController.getPublic);
 
 module.exports = router;

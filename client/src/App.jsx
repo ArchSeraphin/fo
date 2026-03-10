@@ -14,6 +14,7 @@ import AdminDashboard from './pages/admin/Dashboard';
 import ArticleEditor from './pages/admin/ArticleEditor';
 import PartnersDashboard from './pages/admin/PartnersDashboard';
 import PartnerEditor from './pages/admin/PartnerEditor';
+import Analytics from './pages/admin/Analytics';
 
 const ORG_SCHEMA = {
   '@context': 'https://schema.org',
@@ -44,7 +45,29 @@ function ScrollToTop() {
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
   if (loading) return <div className="loading-screen"><div className="spinner"></div></div>;
-  return user ? children : <Navigate to="/admin/connexion" replace />;
+  return user ? children : <Navigate to="/gestion/connexion" replace />;
+}
+
+function GoogleAnalytics() {
+  useEffect(() => {
+    fetch('/api/settings')
+      .then(r => r.json())
+      .then(data => {
+        const id = data.ga_measurement_id;
+        if (!id || !/^G-[A-Z0-9]+$/.test(id)) return;
+        const script = document.createElement('script');
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
+        script.async = true;
+        document.head.appendChild(script);
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { window.dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', id);
+      })
+      .catch(() => {});
+  }, []);
+  return null;
 }
 
 export default function App() {
@@ -67,6 +90,7 @@ export default function App() {
         <script type="application/ld+json">{JSON.stringify(ORG_SCHEMA)}</script>
       </Helmet>
       <AuthContext.Provider value={{ user, setUser, loading }}>
+        <GoogleAnalytics />
         <BrowserRouter>
           <ScrollToTop />
           <Routes>
@@ -77,14 +101,15 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/partenaires" element={<Partners />} />
             <Route path="/mentions-legales" element={<Legal />} />
-            <Route path="/admin" element={<Navigate to="/admin/connexion" replace />} />
-            <Route path="/admin/connexion" element={<AdminLogin />} />
-            <Route path="/admin/tableau-de-bord" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-            <Route path="/admin/articles/nouveau" element={<ProtectedRoute><ArticleEditor /></ProtectedRoute>} />
-            <Route path="/admin/articles/:id/modifier" element={<ProtectedRoute><ArticleEditor /></ProtectedRoute>} />
-            <Route path="/admin/partenaires" element={<ProtectedRoute><PartnersDashboard /></ProtectedRoute>} />
-            <Route path="/admin/partenaires/nouveau" element={<ProtectedRoute><PartnerEditor /></ProtectedRoute>} />
-            <Route path="/admin/partenaires/:id/modifier" element={<ProtectedRoute><PartnerEditor /></ProtectedRoute>} />
+            <Route path="/gestion" element={<Navigate to="/gestion/connexion" replace />} />
+            <Route path="/gestion/connexion" element={<AdminLogin />} />
+            <Route path="/gestion/tableau-de-bord" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/gestion/articles/nouveau" element={<ProtectedRoute><ArticleEditor /></ProtectedRoute>} />
+            <Route path="/gestion/articles/:id/modifier" element={<ProtectedRoute><ArticleEditor /></ProtectedRoute>} />
+            <Route path="/gestion/partenaires" element={<ProtectedRoute><PartnersDashboard /></ProtectedRoute>} />
+            <Route path="/gestion/partenaires/nouveau" element={<ProtectedRoute><PartnerEditor /></ProtectedRoute>} />
+            <Route path="/gestion/partenaires/:id/modifier" element={<ProtectedRoute><PartnerEditor /></ProtectedRoute>} />
+            <Route path="/gestion/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

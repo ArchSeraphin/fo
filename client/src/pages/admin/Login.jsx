@@ -9,7 +9,7 @@ export default function AdminLogin() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  if (user) return <Navigate to="/admin/tableau-de-bord" replace />;
+  if (user) return <Navigate to="/gestion/tableau-de-bord" replace />;
 
   const handleSubmit = async e => {
     e.preventDefault();
