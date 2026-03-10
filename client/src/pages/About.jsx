@@ -1,16 +1,53 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
 
+const photos = [
+  '/img/photos/webp/img_1648.webp',
+  '/img/photos/webp/img_1649.webp',
+  '/img/photos/webp/img_1650.webp',
+  '/img/photos/webp/img_1651.webp',
+  '/img/photos/webp/img_1652.webp',
+  '/img/photos/webp/img_1653.webp',
+  '/img/photos/webp/img_1654.webp',
+  '/img/photos/webp/img_1655.webp',
+  '/img/photos/webp/img_1656.webp',
+  '/img/photos/webp/img_1657.webp',
+  '/img/photos/webp/img_1658.webp',
+  '/img/photos/webp/img_1659.webp',
+  '/img/photos/webp/img_1660.webp',
+  '/img/photos/webp/img_1661.webp',
+  '/img/photos/webp/img_1662.webp',
+  '/img/photos/webp/img_1663.webp',
+];
+
 export default function About() {
+  const [lightbox, setLightbox] = useState(null);
+
   const team = [
     { initials: 'AS', name: 'Audrey SUAIRE', role: 'Présidente & Fondatrice' },
     { initials: 'M', name: 'Marie', role: 'Co-fondatrice' },
     { initials: 'FA', name: 'Fanny', role: 'Bénévole référente' },
     { initials: 'AR', name: 'Arnaud', role: 'Référent événements' },
   ];
+
+  // Fermer avec Échap, naviguer avec les flèches clavier
+  useEffect(() => {
+    if (lightbox === null) return;
+    const handler = e => {
+      if (e.key === 'Escape') setLightbox(null);
+      if (e.key === 'ArrowRight') setLightbox(i => (i + 1) % photos.length);
+      if (e.key === 'ArrowLeft') setLightbox(i => (i - 1 + photos.length) % photos.length);
+    };
+    window.addEventListener('keydown', handler);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', handler);
+      document.body.style.overflow = '';
+    };
+  }, [lightbox]);
 
   return (
     <>
@@ -98,6 +135,58 @@ export default function About() {
           </div>
         </div>
       </section>
+
+      {/* GALERIE PHOTOS */}
+      <section className="section" style={{ background: 'var(--color-bg)' }}>
+        <div className="container">
+          <div className="section-header reveal">
+            <span className="section-label">Nos actions en images</span>
+            <h2>Moments de partage</h2>
+            <div className="section-divider" />
+            <p style={{ color: 'var(--color-text-muted)', maxWidth: '560px', margin: '0 auto' }}>
+              Des années d'engagement au service des enfants et de leurs familles — marchés, galas, visites à l'hôpital...
+            </p>
+          </div>
+          <div className="photo-gallery">
+            {photos.map((src, i) => (
+              <button
+                key={i}
+                className="gallery-item reveal"
+                onClick={() => setLightbox(i)}
+                aria-label={`Voir la photo ${i + 1}`}
+              >
+                <img src={src} alt={`France Organes — photo ${i + 1}`} loading="lazy" />
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* LIGHTBOX */}
+      {lightbox !== null && (
+        <div className="lightbox" onClick={() => setLightbox(null)}>
+          <button
+            className="lightbox-close"
+            onClick={e => { e.stopPropagation(); setLightbox(null); }}
+            aria-label="Fermer"
+          >✕</button>
+          <button
+            className="lightbox-prev"
+            onClick={e => { e.stopPropagation(); setLightbox((lightbox - 1 + photos.length) % photos.length); }}
+            aria-label="Photo précédente"
+          >‹</button>
+          <img
+            src={photos[lightbox]}
+            alt={`France Organes — photo ${lightbox + 1}`}
+            onClick={e => e.stopPropagation()}
+          />
+          <button
+            className="lightbox-next"
+            onClick={e => { e.stopPropagation(); setLightbox((lightbox + 1) % photos.length); }}
+            aria-label="Photo suivante"
+          >›</button>
+        </div>
+      )}
 
       <Footer />
     </>
