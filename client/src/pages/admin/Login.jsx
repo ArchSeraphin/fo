@@ -9,7 +9,7 @@ export default function AdminLogin() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  if (user) return <Navigate to="/gestion/tableau-de-bord" replace />;
+  if (user) return <Navigate to="/admin/tableau-de-bord" replace />;
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -25,7 +25,7 @@ export default function AdminLogin() {
       const data = await r.json();
       if (r.ok) {
         setUser({ loggedIn: true, email: data.user.email });
-        navigate('/gestion/tableau-de-bord', { replace: true });
+        navigate('/admin/tableau-de-bord', { replace: true });
       } else {
         setError(data.error || 'Identifiants incorrects');
       }

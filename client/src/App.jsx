@@ -44,7 +44,7 @@ function ScrollToTop() {
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
   if (loading) return <div className="loading-screen"><div className="spinner"></div></div>;
-  return user ? children : <Navigate to="/gestion/connexion" replace />;
+  return user ? children : <Navigate to="/admin/connexion" replace />;
 }
 
 export default function App() {
@@ -77,14 +77,14 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/partenaires" element={<Partners />} />
             <Route path="/mentions-legales" element={<Legal />} />
-            <Route path="/gestion" element={<Navigate to="/gestion/connexion" replace />} />
-            <Route path="/gestion/connexion" element={<AdminLogin />} />
-            <Route path="/gestion/tableau-de-bord" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-            <Route path="/gestion/articles/nouveau" element={<ProtectedRoute><ArticleEditor /></ProtectedRoute>} />
-            <Route path="/gestion/articles/:id/modifier" element={<ProtectedRoute><ArticleEditor /></ProtectedRoute>} />
-            <Route path="/gestion/partenaires" element={<ProtectedRoute><PartnersDashboard /></ProtectedRoute>} />
-            <Route path="/gestion/partenaires/nouveau" element={<ProtectedRoute><PartnerEditor /></ProtectedRoute>} />
-            <Route path="/gestion/partenaires/:id/modifier" element={<ProtectedRoute><PartnerEditor /></ProtectedRoute>} />
+            <Route path="/admin" element={<Navigate to="/admin/connexion" replace />} />
+            <Route path="/admin/connexion" element={<AdminLogin />} />
+            <Route path="/admin/tableau-de-bord" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/admin/articles/nouveau" element={<ProtectedRoute><ArticleEditor /></ProtectedRoute>} />
+            <Route path="/admin/articles/:id/modifier" element={<ProtectedRoute><ArticleEditor /></ProtectedRoute>} />
+            <Route path="/admin/partenaires" element={<ProtectedRoute><PartnersDashboard /></ProtectedRoute>} />
+            <Route path="/admin/partenaires/nouveau" element={<ProtectedRoute><PartnerEditor /></ProtectedRoute>} />
+            <Route path="/admin/partenaires/:id/modifier" element={<ProtectedRoute><PartnerEditor /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

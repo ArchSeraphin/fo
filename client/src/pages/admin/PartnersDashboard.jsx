@@ -37,8 +37,8 @@ export default function PartnersDashboard() {
           <span>Administration</span>
         </div>
         <nav className="admin-nav">
-          <Link to="/gestion/tableau-de-bord" className="admin-nav-link">📰 Actualités</Link>
-          <Link to="/gestion/partenaires" className="admin-nav-link active">🤝 Partenaires</Link>
+          <Link to="/admin/tableau-de-bord" className="admin-nav-link">📰 Actualités</Link>
+          <Link to="/admin/partenaires" className="admin-nav-link active">🤝 Partenaires</Link>
         </nav>
         <div style={{ padding: '1.5rem' }}>
           <Link to="/" style={{ display: 'block', fontSize: '0.8125rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.75rem' }}>← Voir le site</Link>
@@ -51,7 +51,7 @@ export default function PartnersDashboard() {
       <main className="admin-main">
         <div className="admin-topbar">
           <h2 style={{ fontSize: '1.125rem', color: 'var(--color-primary)', margin: 0 }}>Gestion des partenaires</h2>
-          <Link to="/gestion/partenaires/nouveau" className="btn btn-primary btn-sm">+ Nouveau partenaire</Link>
+          <Link to="/admin/partenaires/nouveau" className="btn btn-primary btn-sm">+ Nouveau partenaire</Link>
         </div>
 
         <div className="admin-content">
@@ -60,7 +60,7 @@ export default function PartnersDashboard() {
               <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}><div className="spinner" /></div>
             ) : partners.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--color-text-muted)' }}>
-                <p>Aucun partenaire. <Link to="/gestion/partenaires/nouveau" style={{ color: 'var(--color-primary)' }}>Ajouter le premier</Link></p>
+                <p>Aucun partenaire. <Link to="/admin/partenaires/nouveau" style={{ color: 'var(--color-primary)' }}>Ajouter le premier</Link></p>
               </div>
             ) : (
               <table className="admin-table">

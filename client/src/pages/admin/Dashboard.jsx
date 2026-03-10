@@ -31,7 +31,7 @@ export default function AdminDashboard() {
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
     setUser(null);
-    navigate('/gestion/connexion', { replace: true });
+    navigate('/admin/connexion', { replace: true });
   };
 
   return (
@@ -42,8 +42,8 @@ export default function AdminDashboard() {
           <span>Administration</span>
         </div>
         <nav className="admin-nav">
-          <Link to="/gestion/tableau-de-bord" className="admin-nav-link active">📰 Actualités</Link>
-          <Link to="/gestion/partenaires" className="admin-nav-link">🤝 Partenaires</Link>
+          <Link to="/admin/tableau-de-bord" className="admin-nav-link active">📰 Actualités</Link>
+          <Link to="/admin/partenaires" className="admin-nav-link">🤝 Partenaires</Link>
         </nav>
         <div style={{ padding: '1.5rem' }}>
           <Link to="/" style={{ display: 'block', fontSize: '0.8125rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.75rem' }}>← Voir le site</Link>
@@ -56,7 +56,7 @@ export default function AdminDashboard() {
       <main className="admin-main">
         <div className="admin-topbar">
           <h2 style={{ fontSize: '1.125rem', color: 'var(--color-primary)', margin: 0 }}>Gestion des actualités</h2>
-          <Link to="/gestion/articles/nouveau" className="btn btn-primary btn-sm">+ Nouvel article</Link>
+          <Link to="/admin/articles/nouveau" className="btn btn-primary btn-sm">+ Nouvel article</Link>
         </div>
 
         <div className="admin-content">
@@ -65,7 +65,7 @@ export default function AdminDashboard() {
               <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}><div className="spinner" /></div>
             ) : data.articles.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--color-text-muted)' }}>
-                <p>Aucun article. <Link to="/gestion/articles/nouveau" style={{ color: 'var(--color-primary)' }}>Créer le premier</Link></p>
+                <p>Aucun article. <Link to="/admin/articles/nouveau" style={{ color: 'var(--color-primary)' }}>Créer le premier</Link></p>
               </div>
             ) : (
               <table className="admin-table">
