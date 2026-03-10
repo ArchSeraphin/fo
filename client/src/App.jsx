@@ -14,6 +14,7 @@ import AdminDashboard from './pages/admin/Dashboard';
 import ArticleEditor from './pages/admin/ArticleEditor';
 import PartnersDashboard from './pages/admin/PartnersDashboard';
 import PartnerEditor from './pages/admin/PartnerEditor';
+import Analytics from './pages/admin/Analytics';
 
 const ORG_SCHEMA = {
   '@context': 'https://schema.org',
@@ -47,6 +48,28 @@ function ProtectedRoute({ children }) {
   return user ? children : <Navigate to="/gestion/connexion" replace />;
 }
 
+function GoogleAnalytics() {
+  useEffect(() => {
+    fetch('/api/settings')
+      .then(r => r.json())
+      .then(data => {
+        const id = data.ga_measurement_id;
+        if (!id || !/^G-[A-Z0-9]+$/.test(id)) return;
+        const script = document.createElement('script');
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
+        script.async = true;
+        document.head.appendChild(script);
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { window.dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', id);
+      })
+      .catch(() => {});
+  }, []);
+  return null;
+}
+
 export default function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -67,6 +90,7 @@ export default function App() {
         <script type="application/ld+json">{JSON.stringify(ORG_SCHEMA)}</script>
       </Helmet>
       <AuthContext.Provider value={{ user, setUser, loading }}>
+        <GoogleAnalytics />
         <BrowserRouter>
           <ScrollToTop />
           <Routes>
@@ -85,6 +109,7 @@ export default function App() {
             <Route path="/gestion/partenaires" element={<ProtectedRoute><PartnersDashboard /></ProtectedRoute>} />
             <Route path="/gestion/partenaires/nouveau" element={<ProtectedRoute><PartnerEditor /></ProtectedRoute>} />
             <Route path="/gestion/partenaires/:id/modifier" element={<ProtectedRoute><PartnerEditor /></ProtectedRoute>} />
+            <Route path="/gestion/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

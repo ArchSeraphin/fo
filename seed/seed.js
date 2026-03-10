@@ -73,6 +73,15 @@ async function main() {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
   `);
 
+  await conn.execute(`
+    CREATE TABLE IF NOT EXISTS settings (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      \`key\` VARCHAR(100) NOT NULL UNIQUE,
+      value TEXT,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+  `);
+
   const email = process.argv[2] || await prompt('Email admin: ');
   const password = process.argv[3] || await prompt('Mot de passe admin: ');
 
