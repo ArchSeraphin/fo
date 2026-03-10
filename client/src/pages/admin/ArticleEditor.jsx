@@ -97,7 +97,7 @@ export default function ArticleEditor() {
       });
       const data = await r.json();
       if (r.ok) {
-        navigate('/gestion/tableau-de-bord');
+        navigate('/admin/tableau-de-bord');
       } else {
         setError(data.error || 'Erreur lors de la sauvegarde');
       }
@@ -119,7 +119,6 @@ export default function ArticleEditor() {
         <nav className="admin-nav">
           <Link to="/gestion/tableau-de-bord" className="admin-nav-link active">📰 Actualités</Link>
           <Link to="/gestion/partenaires" className="admin-nav-link">🤝 Partenaires</Link>
-          <Link to="/gestion/analytics" className="admin-nav-link">📊 Analytics</Link>
         </nav>
         <div style={{ padding: '1.5rem' }}>
           <Link to="/" style={{ display: 'block', fontSize: '0.8125rem', color: 'rgba(255,255,255,0.5)' }}>← Voir le site</Link>

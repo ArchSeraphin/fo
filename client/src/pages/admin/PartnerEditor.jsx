@@ -18,7 +18,7 @@ export default function PartnerEditor() {
 
   useEffect(() => {
     if (!isEdit) return;
-    fetch('/api/admin/partners', { credentials: 'include' })
+    fetch('/api/gestion/partners', { credentials: 'include' })
       .then(r => r.json())
       .then(data => {
         const p = (data || []).find(p => String(p.id) === String(id));
@@ -45,7 +45,7 @@ export default function PartnerEditor() {
     const formData = new FormData();
     formData.append('image', file);
     try {
-      const r = await fetch('/api/admin/upload', { method: 'POST', credentials: 'include', body: formData });
+      const r = await fetch('/api/gestion/upload', { method: 'POST', credentials: 'include', body: formData });
       const data = await r.json();
       if (r.ok) setForm(p => ({ ...p, logo_url: data.url }));
       else setUploadError(data.error || "Erreur lors de l'upload");
@@ -61,7 +61,7 @@ export default function PartnerEditor() {
     setSaving(true);
     setError('');
     try {
-      const url = isEdit ? `/api/admin/partners/${id}` : '/api/admin/partners';
+      const url = isEdit ? `/api/gestion/partners/${id}` : '/api/gestion/partners';
       const method = isEdit ? 'PUT' : 'POST';
       const r = await fetch(url, {
         method,
@@ -90,7 +90,6 @@ export default function PartnerEditor() {
         <nav className="admin-nav">
           <Link to="/gestion/tableau-de-bord" className="admin-nav-link">📰 Actualités</Link>
           <Link to="/gestion/partenaires" className="admin-nav-link active">🤝 Partenaires</Link>
-          <Link to="/gestion/analytics" className="admin-nav-link">📊 Analytics</Link>
         </nav>
         <div style={{ padding: '1.5rem' }}>
           <Link to="/" style={{ display: 'block', fontSize: '0.8125rem', color: 'rgba(255,255,255,0.5)' }}>← Voir le site</Link>

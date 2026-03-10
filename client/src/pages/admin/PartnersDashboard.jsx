@@ -39,7 +39,6 @@ export default function PartnersDashboard() {
         <nav className="admin-nav">
           <Link to="/gestion/tableau-de-bord" className="admin-nav-link">📰 Actualités</Link>
           <Link to="/gestion/partenaires" className="admin-nav-link active">🤝 Partenaires</Link>
-          <Link to="/gestion/analytics" className="admin-nav-link">📊 Analytics</Link>
         </nav>
         <div style={{ padding: '1.5rem' }}>
           <Link to="/" style={{ display: 'block', fontSize: '0.8125rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.75rem' }}>← Voir le site</Link>
