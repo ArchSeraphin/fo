@@ -117,8 +117,8 @@ export default function ArticleEditor() {
           <span>Administration</span>
         </div>
         <nav className="admin-nav">
-          <Link to="/admin/tableau-de-bord" className="admin-nav-link active">📰 Actualités</Link>
-          <Link to="/admin/partenaires" className="admin-nav-link">🤝 Partenaires</Link>
+          <Link to="/gestion/tableau-de-bord" className="admin-nav-link active">📰 Actualités</Link>
+          <Link to="/gestion/partenaires" className="admin-nav-link">🤝 Partenaires</Link>
         </nav>
         <div style={{ padding: '1.5rem' }}>
           <Link to="/" style={{ display: 'block', fontSize: '0.8125rem', color: 'rgba(255,255,255,0.5)' }}>← Voir le site</Link>
@@ -128,7 +128,7 @@ export default function ArticleEditor() {
       <main className="admin-main">
         <div className="admin-topbar">
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <Link to="/admin/tableau-de-bord" style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>← Retour</Link>
+            <Link to="/gestion/tableau-de-bord" style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>← Retour</Link>
             <h2 style={{ fontSize: '1.125rem', color: 'var(--color-primary)', margin: 0 }}>
               {isEdit ? 'Modifier l\'article' : 'Nouvel article'}
             </h2>

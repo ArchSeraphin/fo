@@ -81,7 +81,7 @@ app.get('/sitemap.xml', require('./src/routes/sitemap'));
 // robots.txt
 app.get('/robots.txt', (req, res) => {
   res.type('text/plain');
-  res.send('User-agent: *\nAllow: /\nDisallow: /admin/\nSitemap: https://franceorganes.fr/sitemap.xml\n');
+  res.send('User-agent: *\nAllow: /\nDisallow: /gestion/\nSitemap: https://franceorganes.fr/sitemap.xml\n');
 });
 
 // SPA fallback
