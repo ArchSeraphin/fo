@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
+import SEO from '../components/SEO';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
@@ -35,6 +36,11 @@ export default function Contact() {
 
   return (
     <>
+      <SEO
+        title="Contact"
+        description="Contactez FranceOrganes pour toute question, témoignage ou proposition de bénévolat. Nous répondons sous 48h."
+        canonical="/contact"
+      />
       <Navbar />
       <ScrollReveal />
 

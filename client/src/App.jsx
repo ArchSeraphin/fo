@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
 import Home from './pages/Home';
 import About from './pages/About';
 import News from './pages/News';
@@ -7,11 +8,26 @@ import NewsDetail from './pages/NewsDetail';
 import Contact from './pages/Contact';
 import Partners from './pages/Partners';
 import Legal from './pages/Legal';
+import NotFound from './pages/NotFound';
 import AdminLogin from './pages/admin/Login';
 import AdminDashboard from './pages/admin/Dashboard';
 import ArticleEditor from './pages/admin/ArticleEditor';
 import PartnersDashboard from './pages/admin/PartnersDashboard';
 import PartnerEditor from './pages/admin/PartnerEditor';
+
+const ORG_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'NGO',
+  name: 'France Organes',
+  alternateName: 'FranceOrganes',
+  url: 'https://franceorganes.fr',
+  logo: 'https://franceorganes.fr/img/logo/logo-france-organe.png',
+  foundingDate: '2009-05-04',
+  description: 'Association nationale soutenant les enfants hospitalisés en attente de greffe d\'organes et sensibilisant au don d\'organes.',
+  email: 'contact@franceorganes.fr',
+  areaServed: 'FR',
+  sameAs: [],
+};
 
 export const AuthContext = createContext(null);
 
@@ -46,28 +62,33 @@ export default function App() {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, loading }}>
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/a-propos" element={<About />} />
-          <Route path="/actualites" element={<News />} />
-          <Route path="/actualites/:slug" element={<NewsDetail />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/partenaires" element={<Partners />} />
-          <Route path="/mentions-legales" element={<Legal />} />
-          <Route path="/admin" element={<Navigate to="/admin/connexion" replace />} />
-          <Route path="/admin/connexion" element={<AdminLogin />} />
-          <Route path="/admin/tableau-de-bord" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-          <Route path="/admin/articles/nouveau" element={<ProtectedRoute><ArticleEditor /></ProtectedRoute>} />
-          <Route path="/admin/articles/:id/modifier" element={<ProtectedRoute><ArticleEditor /></ProtectedRoute>} />
-          <Route path="/admin/partenaires" element={<ProtectedRoute><PartnersDashboard /></ProtectedRoute>} />
-          <Route path="/admin/partenaires/nouveau" element={<ProtectedRoute><PartnerEditor /></ProtectedRoute>} />
-          <Route path="/admin/partenaires/:id/modifier" element={<ProtectedRoute><PartnerEditor /></ProtectedRoute>} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthContext.Provider>
+    <HelmetProvider>
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(ORG_SCHEMA)}</script>
+      </Helmet>
+      <AuthContext.Provider value={{ user, setUser, loading }}>
+        <BrowserRouter>
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/a-propos" element={<About />} />
+            <Route path="/actualites" element={<News />} />
+            <Route path="/actualites/:slug" element={<NewsDetail />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/partenaires" element={<Partners />} />
+            <Route path="/mentions-legales" element={<Legal />} />
+            <Route path="/admin" element={<Navigate to="/admin/connexion" replace />} />
+            <Route path="/admin/connexion" element={<AdminLogin />} />
+            <Route path="/admin/tableau-de-bord" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/admin/articles/nouveau" element={<ProtectedRoute><ArticleEditor /></ProtectedRoute>} />
+            <Route path="/admin/articles/:id/modifier" element={<ProtectedRoute><ArticleEditor /></ProtectedRoute>} />
+            <Route path="/admin/partenaires" element={<ProtectedRoute><PartnersDashboard /></ProtectedRoute>} />
+            <Route path="/admin/partenaires/nouveau" element={<ProtectedRoute><PartnerEditor /></ProtectedRoute>} />
+            <Route path="/admin/partenaires/:id/modifier" element={<ProtectedRoute><PartnerEditor /></ProtectedRoute>} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthContext.Provider>
+    </HelmetProvider>
   );
 }

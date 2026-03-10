@@ -75,6 +75,15 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), { maxAge: '7
 app.use('/api', require('./src/routes/api'));
 app.use('/api/admin', require('./src/routes/admin'));
 
+// Dynamic sitemap
+app.get('/sitemap.xml', require('./src/routes/sitemap'));
+
+// robots.txt
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send('User-agent: *\nAllow: /\nDisallow: /admin/\nSitemap: https://franceorganes.fr/sitemap.xml\n');
+});
+
 // SPA fallback
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/dist/index.html'));

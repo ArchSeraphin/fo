@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
+import SEO from '../components/SEO';
 
 function ArticleCard({ article }) {
   return (
@@ -39,6 +40,10 @@ export default function Home() {
 
   return (
     <>
+      <SEO
+        canonical="/"
+        description="FranceOrganes soutient les enfants hospitalisés en attente de greffe d'organes et sensibilise au don d'organes. Fondée en 2009 en Isère."
+      />
       <Navbar />
       <ScrollReveal />
 

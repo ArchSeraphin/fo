@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
+import SEO from '../components/SEO';
 
 export default function News() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [data, setData] = useState({ articles: [], total: 0, pages: 1 });
-  const [page, setPage] = useState(1);
+  const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,6 +21,11 @@ export default function News() {
 
   return (
     <>
+      <SEO
+        title={page > 1 ? `Actualités — page ${page}` : 'Actualités'}
+        description="Suivez toutes les actions et nouvelles de FranceOrganes : événements, galas, visites en hôpital et don d'organes."
+        canonical={page > 1 ? `/actualites?page=${page}` : '/actualites'}
+      />
       <Navbar />
       <ScrollReveal />
 
@@ -69,7 +76,7 @@ export default function News() {
                   {Array.from({ length: data.pages }, (_, i) => i + 1).map(p => (
                     <button
                       key={p}
-                      onClick={() => { setPage(p); window.scrollTo(0, 0); }}
+                      onClick={() => { setSearchParams(p > 1 ? { page: String(p) } : {}); window.scrollTo(0, 0); }}
                       className="btn btn-sm"
                       style={{
                         background: p === page ? 'var(--color-primary)' : 'white',

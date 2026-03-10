@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import SEO from '../components/SEO';
 
 export default function NewsDetail() {
   const { slug } = useParams();
@@ -28,8 +30,43 @@ export default function NewsDetail() {
     </>
   );
 
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: article.title,
+    description: article.excerpt || '',
+    image: article.cover_image ? `https://franceorganes.fr${article.cover_image}` : undefined,
+    datePublished: article.published_at || article.created_at,
+    dateModified: article.updated_at || article.published_at || article.created_at,
+    author: { '@type': 'Organization', name: 'France Organes', url: 'https://franceorganes.fr' },
+    publisher: { '@type': 'Organization', name: 'France Organes', url: 'https://franceorganes.fr' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://franceorganes.fr/actualites/${article.slug}` },
+  };
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Accueil', item: 'https://franceorganes.fr' },
+      { '@type': 'ListItem', position: 2, name: 'Actualités', item: 'https://franceorganes.fr/actualites' },
+      { '@type': 'ListItem', position: 3, name: article.title, item: `https://franceorganes.fr/actualites/${article.slug}` },
+    ],
+  };
+
   return (
     <>
+      <SEO
+        title={article.title}
+        description={article.excerpt || `Lire l'article : ${article.title}`}
+        canonical={`/actualites/${article.slug}`}
+        image={article.cover_image}
+        type="article"
+        article={{ publishedAt: article.published_at, modifiedAt: article.updated_at }}
+      />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
+      </Helmet>
       <Navbar />
 
       <div className="page-header">

@@ -1,10 +1,17 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import SEO from '../components/SEO';
 
 export default function Legal() {
   return (
     <>
+      <SEO
+        title="Mentions légales"
+        description="Mentions légales de FranceOrganes — Association loi 1901 fondée en 2009, présidée par Audrey SUAIRE."
+        canonical="/mentions-legales"
+        noindex={true}
+      />
       <Navbar />
 
       <div className="page-header">

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
+import SEO from '../components/SEO';
 
 const photos = [
   '/img/photos/webp/img_1648.webp',
@@ -51,6 +52,11 @@ export default function About() {
 
   return (
     <>
+      <SEO
+        title="À propos"
+        description="Découvrez l'histoire de FranceOrganes, association fondée en 2009 pour soutenir les enfants hospitalisés en attente de greffe et sensibiliser au don d'organes."
+        canonical="/a-propos"
+      />
       <Navbar />
       <ScrollReveal />
 

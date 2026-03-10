@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ScrollReveal from '../components/ScrollReveal';
+import SEO from '../components/SEO';
 
 export default function Partners() {
   const [partners, setPartners] = useState([]);
@@ -15,6 +16,11 @@ export default function Partners() {
 
   return (
     <>
+      <SEO
+        title="Nos partenaires"
+        description="Découvrez les partenaires qui soutiennent FranceOrganes dans sa mission pour les enfants hospitalisés en attente de greffe d'organes."
+        canonical="/partenaires"
+      />
       <Navbar />
       <ScrollReveal />
 
