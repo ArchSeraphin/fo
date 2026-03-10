@@ -54,9 +54,11 @@ export default function News() {
                         <span className="card-tag">Actualité</span>
                         <span>{new Date(article.published_at || article.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                       </div>
-                      <h3 className="card-title">{article.title}</h3>
+                      <h3 className="card-title">
+                        <Link to={`/actualites/${article.slug}`} className="card-stretched-link">{article.title}</Link>
+                      </h3>
                       {article.excerpt && <p className="card-excerpt">{article.excerpt}</p>}
-                      <Link to={`/actualites/${article.slug}`} className="card-link">Lire l'article</Link>
+                      <span className="card-link" aria-hidden="true">Lire l'article</span>
                     </div>
                   </article>
                 ))}

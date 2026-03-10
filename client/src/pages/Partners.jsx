@@ -36,23 +36,25 @@ export default function Partners() {
             <p style={{ textAlign: 'center', color: 'var(--color-text-muted)', padding: '2rem 0' }}>Aucun partenaire pour le moment.</p>
           ) : (
             <div className="partners-grid reveal">
-              {partners.map(p => (
-                <div key={p.id} className="partner-item" style={{ flexDirection: 'column', gap: '0.5rem', minHeight: '110px' }}>
-                  {p.logo_url ? (
-                    <img src={p.logo_url} alt={p.name} style={{ height: '52px', maxWidth: '120px', objectFit: 'contain' }} />
-                  ) : (
-                    <div style={{ width: '52px', height: '52px', background: 'var(--color-primary)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 700, fontSize: '0.875rem', fontFamily: 'var(--font-display)' }}>
-                      {p.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
-                    </div>
-                  )}
-                  {p.website ? (
-                    <a href={p.website} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--color-primary)', textAlign: 'center' }}>{p.name}</a>
-                  ) : (
-                    <p style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--color-primary)', textAlign: 'center', margin: 0 }}>{p.name}</p>
-                  )}
-                  <span className="card-tag">{p.type}</span>
-                </div>
-              ))}
+              {partners.map(p => {
+                const Tag = p.website ? 'a' : 'div';
+                const linkProps = p.website
+                  ? { href: p.website, target: '_blank', rel: 'noopener noreferrer', title: `Visiter le site de ${p.name}` }
+                  : {};
+                return (
+                  <Tag key={p.id} className="partner-item" {...linkProps} style={{ flexDirection: 'column', gap: '0.5rem', minHeight: '110px' }}>
+                    {p.logo_url ? (
+                      <img src={p.logo_url} alt={p.name} style={{ height: '52px', maxWidth: '120px', objectFit: 'contain' }} />
+                    ) : (
+                      <div style={{ width: '52px', height: '52px', background: 'var(--color-primary)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 700, fontSize: '0.875rem', fontFamily: 'var(--font-display)' }}>
+                        {p.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
+                      </div>
+                    )}
+                    <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--color-primary)', textAlign: 'center' }}>{p.name}</span>
+                    <span className="card-tag">{p.type}</span>
+                  </Tag>
+                );
+              })}
             </div>
           )}
 
