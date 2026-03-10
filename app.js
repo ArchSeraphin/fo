@@ -6,6 +6,23 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 require('dotenv').config();
 
+// Validation des variables d'environnement critiques au démarrage
+const REQUIRED_ENV = ['JWT_SECRET', 'JWT_REFRESH_SECRET', 'DB_USER', 'DB_PASSWORD', 'DB_NAME'];
+for (const key of REQUIRED_ENV) {
+  if (!process.env[key]) {
+    console.error(`FATAL: Variable d'environnement manquante : ${key}`);
+    process.exit(1);
+  }
+}
+if (process.env.JWT_SECRET.length < 32) {
+  console.error('FATAL: JWT_SECRET doit faire au moins 32 caractères');
+  process.exit(1);
+}
+if (process.env.JWT_REFRESH_SECRET.length < 32) {
+  console.error('FATAL: JWT_REFRESH_SECRET doit faire au moins 32 caractères');
+  process.exit(1);
+}
+
 const app = express();
 
 // Trust proxy (Plesk/Nginx reverse proxy)

@@ -1,6 +1,7 @@
 'use strict';
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
 const pool = require('../config/database');
 
@@ -10,6 +11,11 @@ const COOKIE_OPTS = {
   sameSite: 'strict',
   path: '/',
 };
+
+// Hash SHA-256 du token avant stockage en DB (si la DB est compromise, les tokens bruts ne sont pas exposés)
+function hashToken(token) {
+  return crypto.createHash('sha256').update(token).digest('hex');
+}
 
 async function login(req, res) {
   const { email, password } = req.body;
@@ -43,6 +49,17 @@ async function login(req, res) {
       { expiresIn: '7d' }
     );
 
+    // Stocker le hash du refresh token en DB pour permettre la révocation
+    const tokenHash = hashToken(refreshToken);
+    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    await pool.query(
+      'INSERT INTO refresh_tokens (admin_id, token_hash, expires_at) VALUES (?, ?, ?)',
+      [user.id, tokenHash, expiresAt]
+    );
+
+    // Nettoyer les tokens expirés de cet admin (maintenance silencieuse)
+    pool.query('DELETE FROM refresh_tokens WHERE admin_id = ? AND expires_at < NOW()', [user.id]).catch(() => {});
+
     res.cookie('access_token', accessToken, { ...COOKIE_OPTS, maxAge: 15 * 60 * 1000 });
     res.cookie('refresh_token', refreshToken, { ...COOKIE_OPTS, maxAge: 7 * 24 * 60 * 60 * 1000 });
 
@@ -59,6 +76,20 @@ async function refresh(req, res) {
 
   try {
     const payload = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+
+    // Vérifier que le type est bien 'refresh' (évite la confusion access/refresh token)
+    if (payload.type !== 'refresh') {
+      return res.status(401).json({ error: 'Token invalide' });
+    }
+
+    // Vérifier que le token est bien dans la DB (pas révoqué)
+    const tokenHash = hashToken(token);
+    const [tokenRows] = await pool.query(
+      'SELECT id FROM refresh_tokens WHERE token_hash = ? AND expires_at > NOW()',
+      [tokenHash]
+    );
+    if (!tokenRows[0]) return res.status(401).json({ error: 'Session expirée ou révoquée' });
+
     const [rows] = await pool.query('SELECT id, email FROM admins WHERE id = ? LIMIT 1', [payload.id]);
     const user = rows[0];
     if (!user) return res.status(401).json({ error: 'Utilisateur introuvable' });
@@ -76,7 +107,19 @@ async function refresh(req, res) {
   }
 }
 
-function logout(req, res) {
+async function logout(req, res) {
+  const token = req.cookies.refresh_token;
+
+  // Révoquer le refresh token en DB
+  if (token) {
+    try {
+      const tokenHash = hashToken(token);
+      await pool.query('DELETE FROM refresh_tokens WHERE token_hash = ?', [tokenHash]);
+    } catch (err) {
+      console.error('Logout token revocation error:', err);
+    }
+  }
+
   res.clearCookie('access_token', COOKIE_OPTS);
   res.clearCookie('refresh_token', COOKIE_OPTS);
   res.json({ message: 'Déconnecté' });

@@ -46,6 +46,19 @@ async function main() {
   `);
 
   await conn.execute(`
+    CREATE TABLE IF NOT EXISTS refresh_tokens (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      admin_id INT NOT NULL,
+      token_hash VARCHAR(64) NOT NULL UNIQUE,
+      expires_at TIMESTAMP NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      INDEX idx_token_hash (token_hash),
+      INDEX idx_admin_id (admin_id),
+      FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+  `);
+
+  await conn.execute(`
     CREATE TABLE IF NOT EXISTS partners (
       id INT AUTO_INCREMENT PRIMARY KEY,
       name VARCHAR(255) NOT NULL,

@@ -25,4 +25,13 @@ const apiLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-module.exports = { loginLimiter, contactLimiter, apiLimiter };
+// Limite les écritures admin (POST/PUT/DELETE/PATCH) : 60 req/minute
+const adminCrudLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 60,
+  message: { error: 'Trop de requêtes admin. Réessayez dans une minute.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+module.exports = { loginLimiter, contactLimiter, apiLimiter, adminCrudLimiter };
