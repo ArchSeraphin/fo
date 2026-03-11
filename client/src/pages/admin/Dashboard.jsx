@@ -69,43 +69,45 @@ export default function AdminDashboard() {
                 <p>Aucun article. <Link to="/admin/articles/nouveau" style={{ color: 'var(--color-primary)' }}>Créer le premier</Link></p>
               </div>
             ) : (
-              <table className="admin-table">
-                <thead>
-                  <tr>
-                    <th>Titre</th>
-                    <th>Statut</th>
-                    <th>Date</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.articles.map(a => (
-                    <tr key={a.id}>
-                      <td style={{ fontWeight: 500, maxWidth: '300px' }}>
-                        <div style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.title}</div>
-                        <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>/actualites/{a.slug}</div>
-                      </td>
-                      <td>
-                        <span className={`badge ${a.published ? 'badge-success' : 'badge-warning'}`}>
-                          {a.published ? 'Publié' : 'Brouillon'}
-                        </span>
-                      </td>
-                      <td style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem', whiteSpace: 'nowrap' }}>
-                        {new Date(a.created_at).toLocaleDateString('fr-FR')}
-                      </td>
-                      <td>
-                        <div className="admin-actions">
-                          <Link to={`/admin/articles/${a.id}/modifier`} className="btn-icon btn-icon-edit" title="Modifier">✏️</Link>
-                          <button onClick={() => handleToggle(a.id)} className="btn-icon btn-icon-toggle" title={a.published ? 'Dépublier' : 'Publier'}>
-                            {a.published ? '👁️' : '🚀'}
-                          </button>
-                          <button onClick={() => handleDelete(a.id, a.title)} className="btn-icon btn-icon-delete" title="Supprimer">🗑️</button>
-                        </div>
-                      </td>
+              <div className="table-responsive">
+                <table className="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Titre</th>
+                      <th>Statut</th>
+                      <th>Date</th>
+                      <th>Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {data.articles.map(a => (
+                      <tr key={a.id}>
+                        <td style={{ fontWeight: 500, maxWidth: '300px' }}>
+                          <div style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.title}</div>
+                          <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>/actualites/{a.slug}</div>
+                        </td>
+                        <td>
+                          <span className={`badge ${a.published ? 'badge-success' : 'badge-warning'}`}>
+                            {a.published ? 'Publié' : 'Brouillon'}
+                          </span>
+                        </td>
+                        <td style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem', whiteSpace: 'nowrap' }}>
+                          {new Date(a.created_at).toLocaleDateString('fr-FR')}
+                        </td>
+                        <td>
+                          <div className="admin-actions">
+                            <Link to={`/admin/articles/${a.id}/modifier`} className="btn-icon btn-icon-edit" title="Modifier">✏️</Link>
+                            <button onClick={() => handleToggle(a.id)} className="btn-icon btn-icon-toggle" title={a.published ? 'Dépublier' : 'Publier'}>
+                              {a.published ? '👁️' : '🚀'}
+                            </button>
+                            <button onClick={() => handleDelete(a.id, a.title)} className="btn-icon btn-icon-delete" title="Supprimer">🗑️</button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
         </div>
