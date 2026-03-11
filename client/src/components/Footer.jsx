@@ -22,7 +22,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          {/*<div>
             <p className="footer-title">Contact</p>
             <ul className="footer-links">
               <li>contact@franceorganes.fr</li>
@@ -32,7 +32,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-        </div>
+        </div>*/}
 
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} France Organes — Association loi 1901</span>

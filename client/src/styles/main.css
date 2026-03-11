@@ -768,7 +768,7 @@ p:last-child { margin-bottom: 0; }
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   gap: var(--space-lg);
   margin-bottom: var(--space-lg);
 }
