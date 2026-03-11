@@ -21,7 +21,7 @@ export default function Footer() {
               <li><Link to="/contact">Contact</Link></li>
             </ul>
           </div>
-
+        </div>
 
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} France Organes — Association loi 1901</span>
