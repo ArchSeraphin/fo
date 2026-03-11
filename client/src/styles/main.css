@@ -1025,7 +1025,7 @@ p:last-child { margin-bottom: 0; }
    ============================================ */
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
   gap: var(--space-md);
 }
 
