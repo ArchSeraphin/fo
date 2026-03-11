@@ -22,17 +22,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/*<div>
-            <p className="footer-title">Contact</p>
-            <ul className="footer-links">
-              <li>contact@franceorganes.fr</li>
-              <li>France Organes</li>
-              <li style={{ marginTop: '1rem' }}>
-                <Link to="/mentions-legales">Mentions légales</Link>
-              </li>
-            </ul>
-          </div>
-        </div>*/}
 
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} France Organes — Association loi 1901</span>
