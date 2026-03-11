@@ -88,7 +88,7 @@ export default function Home() {
             {[
               { number: '~40 enfants', label: 'gâtés individuellement chaque année' },
               { number: '16 ans', label: 'd\'engagement associatif' },
-              { number: '10+', label: 'hôpitaux partenaires' },
+              { number: '3', label: 'hôpitaux partenaires' },
               { number: 'Depuis 2009', label: 'pour que la vie continue' },
             ].map((s, i) => (
               <div key={i} className="stat-item reveal" style={{ transitionDelay: `${i * 0.1}s` }}>

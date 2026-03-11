@@ -29,9 +29,7 @@ export default function About() {
 
   const team = [
     { initials: 'AS', name: 'Audrey SUAIRE', role: 'Présidente & Fondatrice' },
-    { initials: 'M', name: 'Marie', role: 'Co-fondatrice' },
-    { initials: 'FA', name: 'Fanny', role: 'Bénévole référente' },
-    { initials: 'AR', name: 'Arnaud', role: 'Référent événements' },
+    { initials: 'J', name: 'Justine', role: 'Responsable Communication' },
   ];
 
   // Fermer avec Échap, naviguer avec les flèches clavier
