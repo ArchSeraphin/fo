@@ -771,6 +771,7 @@ p:last-child { margin-bottom: 0; }
   grid-template-columns: 2fr 1fr;
   gap: var(--space-lg);
   margin-bottom: var(--space-lg);
+  justify-items: end;
 }
 
 .footer-brand img { height: 54px; margin-bottom: 1rem; }
