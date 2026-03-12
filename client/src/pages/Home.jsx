@@ -65,7 +65,9 @@ export default function Home() {
             </div>
             <div className="hero-image-wrap">
               <picture>
+                <source media="(max-width: 768px)" type="image/webp" srcSet="/img/france-organe-enfant-home.webp" />
                 <source media="(max-width: 768px)" srcSet="/img/france-organe-enfant-home.jpg" />
+                <source type="image/webp" srcSet="/img/france-organe-enfant-home-3.webp" />
                 <img
                   src="/img/france-organe-enfant-home-3.png"
                   alt="Enfant portant un cœur — France Organes"
