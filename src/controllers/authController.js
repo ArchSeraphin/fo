@@ -57,8 +57,9 @@ async function login(req, res) {
       [user.id, tokenHash, expiresAt]
     );
 
-    // Nettoyer les tokens expirés de cet admin (maintenance silencieuse)
-    pool.query('DELETE FROM refresh_tokens WHERE admin_id = ? AND expires_at < NOW()', [user.id]).catch(() => {});
+    // Nettoyer les tokens expirés de cet admin (maintenance en arrière-plan)
+    pool.query('DELETE FROM refresh_tokens WHERE admin_id = ? AND expires_at < NOW()', [user.id])
+      .catch(err => console.error('Token cleanup error:', err));
 
     res.cookie('access_token', accessToken, { ...COOKIE_OPTS, maxAge: 15 * 60 * 1000 });
     res.cookie('refresh_token', refreshToken, { ...COOKIE_OPTS, maxAge: 7 * 24 * 60 * 60 * 1000 });

@@ -1,6 +1,34 @@
 'use strict';
 const nodemailer = require('nodemailer');
 
+// Singleton : un seul transporter réutilisé pour toutes les requêtes
+let transporter = null;
+
+function getTransporter() {
+  if (!transporter) {
+    transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: process.env.SMTP_SECURE === 'true',
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+      pool: true,
+      maxConnections: 3,
+      maxMessages: 100,
+    });
+  }
+  return transporter;
+}
+
+function closeTransporter() {
+  if (transporter) {
+    transporter.close();
+    transporter = null;
+  }
+}
+
 async function sendContact(req, res) {
   const { name, email, phone, subject, message } = req.body;
 
@@ -9,17 +37,7 @@ async function sendContact(req, res) {
   }
 
   try {
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: process.env.SMTP_SECURE === 'true',
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
-
-    await transporter.sendMail({
+    await getTransporter().sendMail({
       from: `"${name}" <${process.env.SMTP_USER}>`,
       to: process.env.CONTACT_EMAIL,
       replyTo: email,
@@ -35,4 +53,4 @@ async function sendContact(req, res) {
   }
 }
 
-module.exports = { sendContact };
+module.exports = { sendContact, closeTransporter };

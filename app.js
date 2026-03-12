@@ -197,8 +197,33 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`France Organes server running on port ${PORT}`);
 });
+
+// ─── Graceful shutdown ──────────────────────────────────────────────────────
+const { closeTransporter } = require('./src/controllers/contactController');
+
+function gracefulShutdown(signal) {
+  console.log(`\n${signal} reçu — arrêt gracieux…`);
+  server.close(async () => {
+    try {
+      closeTransporter();
+      await pool.end();
+      console.log('Connexions fermées proprement.');
+    } catch (err) {
+      console.error('Erreur lors de la fermeture :', err);
+    }
+    process.exit(0);
+  });
+  // Forcer l'arrêt après 10s si le shutdown ne se termine pas
+  setTimeout(() => {
+    console.error('Shutdown forcé après timeout');
+    process.exit(1);
+  }, 10000).unref();
+}
+
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 
 module.exports = app;
