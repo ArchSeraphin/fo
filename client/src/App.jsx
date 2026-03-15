@@ -15,6 +15,7 @@ import ArticleEditor from './pages/admin/ArticleEditor';
 import PartnersDashboard from './pages/admin/PartnersDashboard';
 import PartnerEditor from './pages/admin/PartnerEditor';
 import Analytics from './pages/admin/Analytics';
+import CookieBanner from './components/CookieBanner';
 
 const ORG_SCHEMA = {
   '@context': 'https://schema.org',
@@ -26,7 +27,15 @@ const ORG_SCHEMA = {
   foundingDate: '2009-05-04',
   description: 'Association nationale soutenant les enfants hospitalisés en attente de greffe d\'organes et sensibilisant au don d\'organes.',
   email: 'contact@franceorganes.fr',
+  contactPoint: {
+    '@type': 'ContactPoint',
+    email: 'contact@franceorganes.fr',
+    contactType: 'customer support',
+    availableLanguage: 'French',
+  },
   areaServed: 'FR',
+  // Ajouter ici les URLs des réseaux sociaux quand disponibles
+  // sameAs: ['https://www.facebook.com/...', 'https://www.helloasso.com/...'],
   sameAs: [],
 };
 
@@ -48,13 +57,16 @@ function ProtectedRoute({ children }) {
   return user ? children : <Navigate to="/admin/connexion" replace />;
 }
 
-function GoogleAnalytics() {
+function GoogleAnalytics({ consent }) {
   useEffect(() => {
+    if (!consent) return;
+    if (window.__GA_LOADED__) return;
     fetch('/api/settings')
       .then(r => r.json())
       .then(data => {
         const id = data.ga_measurement_id;
         if (!id || !/^G-[A-Z0-9]+$/.test(id)) return;
+        window.__GA_LOADED__ = true;
         const script = document.createElement('script');
         script.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
         script.async = true;
@@ -66,13 +78,19 @@ function GoogleAnalytics() {
         gtag('config', id);
       })
       .catch(() => {});
-  }, []);
+  }, [consent]);
   return null;
 }
 
 export default function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [cookieConsent, setCookieConsent] = useState(
+    () => localStorage.getItem('cookieConsent') === 'true'
+  );
+  const [showBanner, setShowBanner] = useState(
+    () => localStorage.getItem('cookieConsent') === null
+  );
 
   useEffect(() => {
     fetch('/api/auth/refresh', { method: 'POST', credentials: 'include' })
@@ -84,13 +102,24 @@ export default function App() {
       .finally(() => setLoading(false));
   }, []);
 
+  const handleAcceptCookies = () => {
+    localStorage.setItem('cookieConsent', 'true');
+    setCookieConsent(true);
+    setShowBanner(false);
+  };
+
+  const handleRefuseCookies = () => {
+    localStorage.setItem('cookieConsent', 'false');
+    setShowBanner(false);
+  };
+
   return (
     <HelmetProvider>
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(ORG_SCHEMA)}</script>
       </Helmet>
       <AuthContext.Provider value={{ user, setUser, loading }}>
-        <GoogleAnalytics />
+        <GoogleAnalytics consent={cookieConsent} />
         <BrowserRouter>
           <ScrollToTop />
           <Routes>
@@ -112,6 +141,9 @@ export default function App() {
             <Route path="/admin/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          {showBanner && (
+            <CookieBanner onAccept={handleAcceptCookies} onRefuse={handleRefuseCookies} />
+          )}
         </BrowserRouter>
       </AuthContext.Provider>
     </HelmetProvider>

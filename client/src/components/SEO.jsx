@@ -16,7 +16,9 @@ export default function SEO({
 }) {
   const fullTitle = title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} — Pour que la vie continue`;
   const fullCanonical = canonical ? `${BASE_URL}${canonical}` : null;
-  const ogImage = image || DEFAULT_IMAGE;
+  const ogImage = image
+    ? (image.startsWith('http') ? image : `${BASE_URL}${image}`)
+    : DEFAULT_IMAGE;
 
   return (
     <Helmet>

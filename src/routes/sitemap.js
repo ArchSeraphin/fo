@@ -26,10 +26,12 @@ module.exports = async function sitemap(req, res) {
       'SELECT slug, updated_at, published_at FROM articles WHERE published = 1 ORDER BY published_at DESC'
     );
 
+    const today = new Date().toISOString().split('T')[0];
     const urls = [
       ...STATIC_PAGES.map(p => `
   <url>
     <loc>${BASE_URL}${p.loc}</loc>
+    <lastmod>${today}</lastmod>
     <changefreq>${p.changefreq}</changefreq>
     <priority>${p.priority}</priority>
   </url>`),

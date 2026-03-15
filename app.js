@@ -103,11 +103,11 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "https://fonts.googleapis.com"],
+      scriptSrc: ["'self'", "https://fonts.googleapis.com", "https://www.googletagmanager.com"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://fonts.gstatic.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      imgSrc: ["'self'", "data:", "blob:"],
-      connectSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "blob:", "https://www.google-analytics.com"],
+      connectSrc: ["'self'", "https://www.google-analytics.com", "https://analytics.google.com", "https://stats.g.doubleclick.net"],
       frameSrc: ["'none'"],
       objectSrc: ["'none'"],
       upgradeInsecureRequests: process.env.NODE_ENV === 'production' ? [] : null,
@@ -151,7 +151,7 @@ app.get('/sitemap.xml', require('./src/routes/sitemap'));
 // robots.txt
 app.get('/robots.txt', (req, res) => {
   res.type('text/plain');
-  res.send('User-agent: *\nAllow: /\nDisallow: /admin/\nSitemap: https://franceorganes.fr/sitemap.xml\n');
+  res.send('User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /api/\nDisallow: /uploads/\nSitemap: https://franceorganes.fr/sitemap.xml\n');
 });
 
 // SPA fallback — injecte les meta OG côté serveur pour les crawlers sociaux
